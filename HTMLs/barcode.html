@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BLACK&WHITE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+const constraints = {
+  video: true
+};
+
+const video = document.querySelector('video');
+
+navigator.mediaDevices.getUserMedia(constraints).
+  then((stream) => {video.srcObject = stream});
+</script>
+ <nav class="navbar navbar-default" style="background-color:#60a9bfe3">
+	<div class="col-md-5">
+        </div>
+        <div class="navbar navbar-header col-md-3">
+            <a class="navbar-brand text-center" style="color:black;line-height:33px"> Black&White</a>
+        </div>
+		<div class="col-md-4">
+        </div>
+
+    </nav>
+	<div class="col-md-12" style="margin-left:10px">
+	<div style="width:500px;background-color:#ccc;border:10px solid #ddd;float:left;margin-left:115px" >
+		<video id="video" width="500" height="270"></video>
+	</div>
+		<div class="col-md-1" style="margin-left:6px;margin-top:100px;float:left;">
+		<button class="btn btn-primary" id="capture">ScanIT!</button>
+		</div>
+	<div style="width:500px;background-color:#ccc;border:10px solid #ddd;float:left">
+		<canvas id="canvas" width="400" height="270"></canvas>
+	</div>
+	
+		</div>
+	<div class="container col-md-12">
+  <h4 class="col-md-6" style="text-align:center">Stores U LUV for <span id="productName"></span></h4>            
+  <table class="table table-striped col-md-6">
+      <tr>
+        <th>VENDOR</th>
+        <th>COST</th>
+        <th>RATE</th>
+      </tr>
+  </table>
+</div>
+		
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.js" ></script>
+	<script src="{{ url_for('static', filename = 'cavas-toBlob.js') }}"></script>
+	<script>
+	(function(){
+	
+	
+	var xhr = new XMLHttpRequest();
+xhr.addEventListener("readystatechange", function (response) {
+    if (this.readyState === 4) {
+		
+        console.log(this.responseText);
+        console.log(this);
+        console.log(response);
+    }
+});
+xhr.open('GET', 'http://localhost:5031');
+xhr.setRequestHeader('Access-Control-Allow-Origin','*'); 
+xhr.setRequestHeader('Access-Control-Allow-Methods','GET'); 
+
+		var video=document.getElementById("video");
+		var canvas=document.getElementById("canvas");
+		var photo1=document.getElementById("photo");
+		var context=canvas.getContext('2d');
+		vendorUrl=window.URL || window.webkitURL;
+		navigator.getMedia=navigator.getUserMedia ||
+		navigator.webkitGetUserMedia||navigator.mozGetUserMedia
+		||navigator.msGetUserData;
+		
+		navigator.getMedia({
+			video: true,
+			audio:false},function(stream){
+				video.srcObject=stream;
+				video.play();
+				
+			},function(error){
+			});
+			var c1=document.getElementById('capture');
+			c1.addEventListener('click',function(){
+				context.drawImage(video,0,0,400,270);
+				 var imgData = context.getImageData(0, 0, 400, 270);
+				 var data = canvas.toDataURL('image/png');
+				canvas.toBlob(function(blob) {
+				var filesaver = saveAs(blob, "test.png");
+				filesaver.onwriteend = function() { 
+				
+				
+				
+				
+
+
+
+				<!-- sendRequest(); -->
+				<!-- xhr.send(data); -->
+
+$.ajax({
+url: "/scan",
+type:"GET",
+async: false,
+success: function(result) {
+console.log(result.json());
+console.log(result);
+},
+error:function(error){
+//console.log(error.json());
+console.log(error);
+}
+})
+
+				
+				}
+				}, "image/png");
+			})
+			
+			sendRequest = function () {
+				 fetch('/scan')
+				.then(function(response) {
+				console.log("...............%%%%%%%%%%%%%%%5..")
+					if(response==undefined)
+					{
+						console.log("....................")
+					}
+					alert(response);
+				    console.log(response);
+					if(response.status=="Success"){
+					alert(response.data);
+				    console.log(response);
+					var stores=response.data;
+					var productName=response.productName;
+					document.getElementById("productName").innerHTML=productName;
+					var tr;
+					for(var i=0;i<stores.length;i++){
+						tr=$('<tr/>');
+						 tr.append("<td>" + stores[i][0] + "</td>");
+						tr.append("<td>" + stores[i][1] + "</td>");
+						tr.append("<td>" + " " + "</td>");
+						$('table').append(tr);
+					}
+					return response.json();
+					}
+					else if(response.status=="Error"){
+						alert("Barcode Not Detected");
+					}
+					
+				}).then(function(jsonData) {
+					console.log(jsonData);
+					
+				}).catch(function(err) {
+					console.log("Opps, Something went wrong!", err);
+				}) }
+
+			
+	})();
+	</script>
+</body>
+</html>

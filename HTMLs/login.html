@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+		 
+</head>
+<body>
+    <nav class="navbar navbar-default" style="background-color:#60a9bfe3">
+	<div class="col-md-5">
+        </div>
+        <div class="navbar navbar-header col-md-3">
+            <a class="navbar-brand text-center" style="color:black;line-height:33px"> Black&White</a>
+        </div>
+		<div class="col-md-4">
+        </div>
+
+    </nav>
+    <div class="container">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+            <img src="{{ url_for('static', filename = 'p1.png') }}" class="img-responsive img-log" alt="" style="margin-top:107px"></img>
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="g">
+                
+
+                <h3 style="margin-top:70px">
+                    Login
+                </h3>
+                <form method="POST" action="/login" class="login">
+                    <div class="input-group" style="margin:20px">
+                        <span class="input-group-addon">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </span>
+                        <input type="email" class="form-control" placeholder="Email" name="emailId" id="emailId" />
+                    </div>
+                    <div class="input-group" style="margin:20px">
+                        <span class="input-group-addon">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password"/>
+                    </div>
+                    <button class="btn btn-primary" style="margin:10px" >SIGN IN</button>
+                </form>
+                <p>Create an Account?<a href="/">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	 <script>
+	  <!-- function signIn(form) { -->
+	  <!-- var email = document.getElementById("emailId").value; -->
+	  <!-- var paswd = document.getElementById("password").value; -->
+	  <!-- alert("inside"); -->
+        <!-- $.ajax( -->
+            <!-- { -->
+                <!-- url: "http://localhost:5000/login", -->
+        <!-- type: 'POST', -->
+        <!-- data: { emailId: email , password : paswd} , -->
+        <!-- contentType: 'application/json; charset=utf-8', -->
+        <!-- success: function (response) { -->
+            <!-- alert(response.status); -->
+        <!-- }, -->
+        <!-- error: function () { -->
+            <!-- alert("error"); -->
+        <!-- } -->
+            <!-- }); -->
+    <!-- } -->
+	  </script>
+</body>
+</html>
